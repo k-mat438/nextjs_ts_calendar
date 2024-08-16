@@ -1,7 +1,22 @@
+'use client'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AppsIcon from '@mui/icons-material/Apps';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
+  const router = useRouter();
+
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    if (value === 'week') {
+      router.push('/calendar/week');
+    }
+    if (value === 'month') {
+      router.push('/calendar/month');
+    }
+  };
+
+
   return (
     <header className="flex px-4 py-2 w-full bg-white items-center border-b">
       <div className="flex space-x-4">
@@ -11,7 +26,7 @@ const Header = () => {
           <span className="font-medium text-lg">カレンダー</span>
         </div>
       </div>
-      
+
       <div className="flex justify-between w-10/12 mx-auto">
         <div className='flex items-center space-x-5'>
           <button className="px-4 py-2 bg-white border border-gray-200 rounded hover:bg-gray-50">今日</button>
@@ -21,17 +36,17 @@ const Header = () => {
         </div>
 
         <div className='flex items-center space-x-2'>
-          <select className="px-3 py-1 border rounded-md">
-            <option>週</option>
-            <option>月</option>
+          <select className="px-3 py-1 border rounded-md" onChange={handleSelectChange}>
+            <option value='month'>月</option>
+            <option value='week'>週</option>
           </select>
-          <AppsIcon className='hover:bg-gray-100'/>
+          <AppsIcon className='hover:bg-gray-100' />
         </div>
       </div>
 
       <div>
         <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-white">
-          K
+          M
         </div>
       </div>
     </header>

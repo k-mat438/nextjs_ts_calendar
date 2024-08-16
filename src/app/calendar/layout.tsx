@@ -1,5 +1,5 @@
+import Header from '@/components/Header';
 import React from 'react';
-import Header from '../../components/Header';
 
 export default function CalendarLayout({
   children,
@@ -7,9 +7,9 @@ export default function CalendarLayout({
   children: React.ReactNode
 }) {
   return (
-    <div>
+    <div className="h-screen flex flex-col">
       <Header />
-      <main>{children}</main>
+      <main className="overflow-hidden">{children}</main>
     </div>
   );
 }
