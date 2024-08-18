@@ -1,4 +1,5 @@
-import Header from '../../../components/Header';
+import { getCalendarInfo } from '@/utils/utilsCalendar';
+import { addDays, getDate, startOfWeek} from 'date-fns';
 
 const WeekCalendar = () => {
   const getTimeLabel = (index: number) => {
@@ -7,11 +8,11 @@ const WeekCalendar = () => {
     else return `午後${index}時`;
   }
 
+  const { date }= getCalendarInfo()
+  const startWeek = startOfWeek(date)
+
   return (
     <>
-      {/* <div className="h-screen flex flex-col"> */}
-        {/* <Header /> */}
-        {/* <div className="flex-1 flex flex-col overflow-hidden"> */}
         <div className="h-full flex flex-col">
           <div className="sticky top-0 bg-white z-10">
             <div className="container mx-auto px-4">
@@ -23,7 +24,7 @@ const WeekCalendar = () => {
                       {day}
                     </div>
                     <div className="text-center text-gray-500 text-xl border-b">
-                      {11 + index}
+                      {getDate(addDays(startWeek, index)) }
                     </div>
                   </div>
                 ))}
@@ -56,8 +57,6 @@ const WeekCalendar = () => {
             </div>
           </div>
           </div>
-        {/* </div> */}
-      {/* </div> */}
     </>
   );
 };

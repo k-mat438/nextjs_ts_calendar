@@ -1,10 +1,13 @@
 'use client'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AppsIcon from '@mui/icons-material/Apps';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { getMonth, getYear, format } from 'date-fns';
+import { getCalendarInfo } from '@/utils/utilsCalendar';
 
 const Header = () => {
   const router = useRouter();
+  const currentPath = usePathname()
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -17,6 +20,7 @@ const Header = () => {
   };
 
 
+  const { date }= getCalendarInfo()
   return (
     <header className="flex px-4 py-2 w-full bg-white items-center border-b">
       <div className="flex space-x-4">
@@ -32,7 +36,8 @@ const Header = () => {
           <button className="px-4 py-2 bg-white border border-gray-200 rounded hover:bg-gray-50">今日</button>
           <button className="px-2 py-1 hover:bg-gray-50 rounded">&lt;</button>
           <button className="px-2 py-1 hover:bg-gray-50 rounded">&gt;</button>
-          <div className="text-xl ml-2">2024年 8月</div>
+          {/* <div className="text-xl ml-2">{`${getYear(date)}年 ${getMonth(date)+1}月`}</div> */}
+          <div className="text-xl ml-2">{`${getYear(date)}年 ${getMonth(date)+1}月`}</div>
         </div>
 
         <div className='flex items-center space-x-2'>
