@@ -1,8 +1,28 @@
-import WeekHeader from '@/components/WeekHeader';
+import { notFound } from 'next/navigation'
+import { addDays, getDate, startOfMonth, startOfWeek, format, getMonth } from 'date-fns';
+import React from 'react';
 import { getCalendarInfo } from '@/utils/utilsCalendar';
-import { addDays, getDate, startOfWeek} from 'date-fns';
 
-const WeekCalendar = () => {
+import WeekHeader from '@/components/WeekHeader';
+
+
+type CurrentWeek = {
+  params: {
+    year: string
+    month: string
+    day: string
+  }
+}
+
+export default function WeekCalendarPage({ params }: CurrentWeek) {
+  const year = parseInt(params.year)
+  const month = parseInt(params.month)
+  const day = parseInt(params.day)
+
+  if (isNaN(year) || isNaN(month) || month < 1 || month > 12) {
+    notFound()
+  }
+
   const getTimeLabel = (index: number) => {
     if (index < 12) return `午前${index}時`;
     else if (index == 12) return '正午';
@@ -10,7 +30,10 @@ const WeekCalendar = () => {
   }
 
   const { date }= getCalendarInfo()
-  const startWeek = startOfWeek(date)
+  // const startWeek = startOfWeek(date)
+  const activeWeek:  Date= new Date(year, month -1, day)
+  const startWeek = startOfWeek(activeWeek)
+
 
   return (
     <>
@@ -60,7 +83,6 @@ const WeekCalendar = () => {
           </div>
          </div>
     </>
-  );
-};
 
-export default WeekCalendar;
+  )
+}

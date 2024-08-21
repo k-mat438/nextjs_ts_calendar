@@ -1,17 +1,34 @@
-import MonthHeader from '@/components/MonthHeader';
-import { getCalendarInfo } from '@/utils/utilsCalendar';
+import { notFound } from 'next/navigation'
 import { addDays, getDate, startOfMonth, startOfWeek, format, getMonth } from 'date-fns';
 import React from 'react';
+import { getCalendarInfo } from '@/utils/utilsCalendar';
+import MonthHeader from '@/components/MonthHeader';
+
+
+type CurrentMonth = {
+  params: {
+    year: string
+    month: string
+  }
+}
 
 type DateDisplay = {
   value: string | number;
   isFirstDay: boolean;
 };
 
-const MonthCalendar = () => {
- 
+export default function CalendarPage({ params }: CurrentMonth) {
+  const year = parseInt(params.year)
+  const month = parseInt(params.month)
+
+  if (isNaN(year) || isNaN(month) || month < 1 || month > 12) {
+    notFound()
+  }
+
+  const activeMonth:  Date= new Date(year, month -1, 1)
   const { date } = getCalendarInfo()
-  const startDay = startOfWeek(startOfMonth(date))
+  
+  const startDay = startOfWeek(startOfMonth(activeMonth))
 
   const renderDateContent = (display: DateDisplay) => {
     return display.isFirstDay ? display.value : display.value.toString();
@@ -66,5 +83,3 @@ const MonthCalendar = () => {
     </>
   )
 }
-
-export default MonthCalendar
